@@ -128,6 +128,15 @@ on property:init.svc.recovery=running
 on property:dev.bootcomplete=1
     setprop sys.io.scheduler "cfq"
     write /proc/sys/vm/laptop_mode 1
+
+    # kill all the wakeups
+    write /sys/module/wakeup/parameters/enable_qcom_rx_wakelock_ws 0
+    write /sys/module/wakeup/parameters/enable_wlan_extscan_wl_ws 0
+    write /sys/module/wakeup/parameters/enable_ipa_ws 0
+    write /sys/module/wakeup/parameters/enable_wlan_ws 0
+    write /sys/module/wakeup/parameters/enable_timerfd_ws 0
+    write /sys/module/wakeup/parameters/enable_netlink_ws 0
+
     # update cpusets now that boot is complete and we want better load balancing
     write /dev/cpuset/top-app/cpus 0-3
     write /dev/cpuset/foreground/boost/cpus 0-2
